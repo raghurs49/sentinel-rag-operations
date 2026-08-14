@@ -4,7 +4,7 @@
 
 Sentinel is an interactive portfolio demonstration of how an AI engineering team can evaluate, investigate, and govern RAG releases before they reach users.
 
-**Live demo:** [sentinel-rag-operations.zntgxssydf.chatgpt.site](https://sentinel-rag-operations.zntgxssydf.chatgpt.site)
+**Live demo:** [sentinel-rag-operations.vercel.app](https://sentinel-rag-operations.vercel.app)
 
 > All metrics, traces, prompts, documents, and incidents in this repository are synthetic. No client, patient, employee, or proprietary data is included.
 
