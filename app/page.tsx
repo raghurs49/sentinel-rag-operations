@@ -50,6 +50,18 @@ const runs = [
 
 const trend = [72, 76, 74, 81, 79, 84, 86, 85, 91, 90, 94, 98];
 
+const failureMix = [
+  { label: "Missing evidence", value: 38, tone: "red" },
+  { label: "Weak citation", value: 34, tone: "amber" },
+  { label: "Should abstain", value: 28, tone: "violet" },
+];
+
+const releaseComparison = [
+  { label: "Grounded answers", candidate: 98.4, production: 96.1 },
+  { label: "Citation coverage", candidate: 96.8, production: 95.4 },
+  { label: "Safe abstention", candidate: 91.2, production: 86.4 },
+];
+
 function MetricCard({ label, value, delta, tone, note }: { label: string; value: string; delta: string; tone: string; note: string }) {
   return (
     <article className="metric-card">
@@ -118,14 +130,16 @@ function Overview({ onNavigate }: { onNavigate: (view: View) => void }) {
         </article>
 
         <article className="panel attention-panel">
-          <div className="panel-heading"><div><span className="tiny-label">NEEDS ATTENTION</span><h3>Failure queue</h3></div><button className="text-button" onClick={() => onNavigate("Failure explorer")}>View all →</button></div>
-          {failures.map((failure) => (
-            <button className="failure-row" key={failure.id} onClick={() => onNavigate("Failure explorer") }>
-              <span className={`severity ${failure.severity.toLowerCase()}`}>{failure.severity}</span>
-              <span className="failure-copy"><b>{failure.category}</b><small>{failure.query}</small></span>
-              <span className="row-arrow">›</span>
-            </button>
-          ))}
+          <div className="panel-heading"><div><span className="tiny-label">FAILURE INTELLIGENCE</span><h3>Open failure mix</h3></div><button className="text-button" onClick={() => onNavigate("Failure explorer")}>Explore →</button></div>
+          <div className="failure-mix">
+            <div className="donut" role="img" aria-label="Failure mix: 38 percent missing evidence, 34 percent weak citation, 28 percent should abstain">
+              <div><strong>3</strong><span>OPEN</span></div>
+            </div>
+            <div className="mix-legend">
+              {failureMix.map((item) => <div key={item.label}><i className={item.tone} /><span>{item.label}</span><b>{item.value}%</b></div>)}
+            </div>
+          </div>
+          <div className="priority-signal"><span className="severity high">High</span><div><b>Missing evidence remains the release blocker</b><small>Generation exceeded retrieved support in F-184.</small></div></div>
         </article>
       </section>
 
@@ -155,12 +169,22 @@ function EvaluationRuns() {
         <div><span>Regressions</span><strong className="warning-text">3</strong><small>1 high-risk</small></div>
         <div><span>Decision</span><strong>Hold</strong><small>Human review required</small></div>
       </div>
-      <div className="panel table-panel">
-        <div className="table-title"><div><h3>Evaluation history</h3><p>All results use versioned synthetic test data.</p></div><button className="filter-button">All suites ⌄</button></div>
-        <div className="data-table">
-          <div className="table-row table-header"><span>VERSION</span><span>TEST CASES</span><span>GROUNDED</span><span>CITATIONS</span><span>SAFETY</span><span>STATUS</span></div>
-          {runs.map((run) => <div className="table-row" key={run.version}><span><b>{run.version}</b><small>{run.date}</small></span><span>{run.cases}</span><span>{run.grounded}%</span><span>{run.citations}%</span><span>{run.safety}%</span><span><i className={`status-chip ${run.status.toLowerCase()}`}>{run.status}</i></span></div>)}
+      <div className="evaluation-detail-grid">
+        <div className="panel table-panel">
+          <div className="table-title"><div><h3>Evaluation history</h3><p>All results use versioned synthetic test data.</p></div><button className="filter-button">All suites ⌄</button></div>
+          <div className="data-table">
+            <div className="table-row table-header"><span>VERSION</span><span>TEST CASES</span><span>GROUNDED</span><span>CITATIONS</span><span>SAFETY</span><span>STATUS</span></div>
+            {runs.map((run) => <div className="table-row" key={run.version}><span><b>{run.version}</b><small>{run.date}</small></span><span>{run.cases}</span><span>{run.grounded}%</span><span>{run.citations}%</span><span>{run.safety}%</span><span><i className={`status-chip ${run.status.toLowerCase()}`}>{run.status}</i></span></div>)}
+          </div>
         </div>
+        <aside className="panel comparison-panel">
+          <span className="tiny-label">RELEASE DELTA</span>
+          <h3>Candidate vs. production</h3>
+          <p>Every quality signal improved, but one high-risk regression still blocks release.</p>
+          <div className="comparison-key"><span><i className="candidate-key" />v0.14.2</span><span><i className="production-key" />v0.14.1</span></div>
+          {releaseComparison.map((metric) => <div className="comparison-row" key={metric.label}><div><b>{metric.label}</b><strong>+{(metric.candidate - metric.production).toFixed(1)}%</strong></div><div className="comparison-track"><span className="production-bar" style={{ width: `${metric.production}%` }} /><span className="candidate-bar" style={{ width: `${metric.candidate}%` }} /></div><small>{metric.production}% → {metric.candidate}%</small></div>)}
+          <div className="comparison-verdict"><span>QUALITY</span><b>↑ Improving</b><span>DECISION</span><b className="hold">Hold</b></div>
+        </aside>
       </div>
     </section>
   );
