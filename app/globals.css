@@ -160,3 +160,35 @@ footer { margin-top: auto; padding: 14px 34px; border-top: 1px solid var(--line)
 }
 
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; } }
+
+/* Drift & calibration view */
+.severity.low { background: #e8eef8; color: #4b6da3; }
+.severity-dot.low { background: #7d98c4; }
+.status-icon.fail { background: #fae8e6; color: #b94c45; }
+.status-icon.wait { background: #eef0ef; color: #7e8984; }
+.trace-signal { margin: 14px 0 0; padding: 12px 14px; border-radius: 8px; background: #f2f5f3; color: #51616a; font-size: 11px; line-height: 1.5; }
+.drift-row { display: grid; grid-template-columns: 1.6fr repeat(3, .8fr) 1fr .8fr; align-items: center; padding: 13px 22px 0; font-size: 11px; color: #51616a; }
+.drift-row.table-header { padding: 12px 22px; min-height: 35px; background: #f8faf8; color: #929d98; font-size: 8px; font-weight: 900; letter-spacing: .08em; }
+.drift-block { border-bottom: 1px solid #edf0ee; padding-bottom: 12px; }
+.drift-block:last-child { border-bottom: 0; }
+.drift-note { margin: 6px 22px 0; color: #7b8a91; font-size: 10px; line-height: 1.5; }
+.drift-chip { font-style: normal; border-radius: 99px; padding: 5px 9px; font-size: 8px; font-weight: 900; width: fit-content; }
+.drift-chip.stable { background: #e0f4ec; color: #13845e; }
+.drift-chip.watch { background: #fff0d9; color: #b4771a; }
+.drift-chip.drift { background: #fae8e6; color: #b94c45; }
+.drift-items { margin-top: 14px; padding: 0 0 6px; overflow: hidden; }
+.drift-item { padding: 16px 22px; border-top: 1px solid #edf0ee; }
+.drift-item-head { display: flex; justify-content: space-between; gap: 16px; font-size: 11px; }
+.drift-item-head span { color: #8b969c; font-size: 9px; white-space: nowrap; }
+.drift-item p { margin: 8px 0 10px; color: #51616a; font-size: 11px; line-height: 1.6; }
+.reason-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.reason { font-style: normal; border-radius: 99px; padding: 4px 8px; background: #fff0d9; color: #b4771a; font-size: 8px; font-weight: 900; letter-spacing: .04em; }
+.method-panel { margin-top: 14px; }
+.method-panel h3 { margin: 6px 0 8px; font-size: 15px; }
+.method-panel p { margin: 0; color: #64737b; font-size: 11px; line-height: 1.7; max-width: 880px; }
+@media (max-width: 900px) {
+  .drift-row { grid-template-columns: 1.4fr repeat(3, .7fr) .8fr; }
+  .drift-row span:nth-child(5) { display: none; }
+  .drift-item-head { flex-direction: column; gap: 4px; }
+}
+.metric-delta.worse { color: #c0504a; }
