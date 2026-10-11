@@ -70,6 +70,8 @@ function Overview({ onNavigate }: { onNavigate: (view: View) => void }) {
   const top = failures[0];
   const labelIndexes = trend.length <= 6 ? trend.map((_, index) => index) : [0, 3, 6, 9, trend.length - 1];
   const gain = trend[trend.length - 1] - trend[0];
+  const versusProduction = (cm.groundedAnswerRate - pm.groundedAnswerRate) * 100;
+  const columns = { gridTemplateColumns: `repeat(${trend.length}, 1fr)` };
   return (
     <>
       <section className="hero-grid">
@@ -107,16 +109,16 @@ function Overview({ onNavigate }: { onNavigate: (view: View) => void }) {
       <section className="content-grid">
         <article className="panel trend-panel">
           <div className="panel-heading">
-            <div><span className="tiny-label">{trend.length} RELEASE TREND</span><h3>Grounding is {gain >= 0 ? "up" : "down"} {Math.abs(gain).toFixed(0)} points</h3></div>
+            <div><span className="tiny-label">{trend.length} RELEASE TREND</span><h3>{gain >= 0 ? "Up" : "Down"} {Math.abs(gain).toFixed(0)} points since {report.releases[0].version}, but {candidate.version} is {Math.abs(versusProduction).toFixed(1)} {versusProduction >= 0 ? "above" : "below"} production</h3></div>
             <div className="legend"><span /><span>Grounded answer rate</span></div>
           </div>
           <div className="trend-chart" aria-label={`Grounding trend from ${trend[0].toFixed(0)} to ${trend[trend.length - 1].toFixed(0)} percent`}>
-            <div className="chart-guides"><span>100%</span><span>90%</span><span>80%</span><span>70%</span></div>
-            <div className="bars">
-              {trend.map((value, index) => <div key={report.releases[index].version} className={`bar ${index === trend.length - 1 ? "active" : ""}`} style={{ height: `${Math.max(6, ((value - 30) / 70) * 100)}%` }}><span>{index === trend.length - 1 ? `${value.toFixed(0)}%` : ""}</span></div>)}
+            <div className="chart-guides"><span>100%</span><span>75%</span><span>50%</span><span>25%</span><span>0%</span></div>
+            <div className="bars" style={columns}>
+              {trend.map((value, index) => <div key={report.releases[index].version} className={`bar ${index === trend.length - 1 ? "active" : ""}`} style={{ height: `${Math.max(2, value)}%` }}><span>{index === trend.length - 1 ? `${value.toFixed(0)}%` : ""}</span></div>)}
             </div>
           </div>
-          <div className="trend-footer">{labelIndexes.map((index) => <span key={index}>{report.releases[index].version}</span>)}</div>
+          <div className="trend-footer" style={{ gridTemplateColumns: `repeat(${labelIndexes.length}, 1fr)` }}>{labelIndexes.map((index) => <span key={index}>{report.releases[index].version}</span>)}</div>
         </article>
 
         <article className="panel attention-panel">
