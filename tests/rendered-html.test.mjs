@@ -11,6 +11,8 @@ test("ships the Sentinel product surfaces and truthful demo boundary", async () 
   assert.match(page, /Evaluation runs/);
   assert.match(page, /Failure explorer/);
   assert.match(page, /Release gate/);
+  assert.match(page, /Drift & calibration/);
+  assert.match(page, /buildReport/);
   assert.match(page, /Synthetic demo data/);
   assert.match(page, /No client or patient information/);
 });
