@@ -5519,7 +5519,7 @@
      ],
      "latencyMs": 1692,
      "abstained": false,
-     "answer": "[DOC_NOT_FOUND] The provided documents do not contain information related to the California Consumer Privacy Act (CCPA). Therefore, I cannot provide specific information about opt-out requests in the CCPA based on the documents you've shared.,, and pertain to GDPR (General Data Protection Regulation) and do not cover the CCPA.",
+     "answer": "[DOC_NOT_FOUND] The provided documents do not contain information related to the California Consumer Privacy Act (CCPA). Therefore, I cannot provide specific information about opt-out requests in the CCPA based on the documents you've shared., and pertain to GDPR (General Data Protection Regulation) and do not cover the CCPA.",
      "claims": [
       {
        "text": "[DOC_NOT_FOUND] The provided documents do not contain information related to the California Consumer Privacy Act (CCPA).",
@@ -8788,7 +8788,7 @@
      ],
      "latencyMs": 2756,
      "abstained": false,
-     "answer": "The two tiers of administrative fines are outlined in Article 83 of the GDPR. The first tier, for infringements of the basic principles, consent conditions, data subject rights, and transfer rules, can lead to fines up to €20 million or 4% of the total worldwide annual turnover, whichever is higher. The second tier, for obligations such as breach notification, records of processing, and data protection by design, can lead to fines up to €10 million or 2% of the total worldwide annual turnover, whichever is higher.,",
+     "answer": "The two tiers of administrative fines are outlined in Article 83 of the GDPR. The first tier, for infringements of the basic principles, consent conditions, data subject rights, and transfer rules, can lead to fines up to €20 million or 4% of the total worldwide annual turnover, whichever is higher. The second tier, for obligations such as breach notification, records of processing, and data protection by design, can lead to fines up to €10 million or 2% of the total worldwide annual turnover, whichever is higher.",
      "claims": [
       {
        "text": "The two tiers of administrative fines are outlined in Article 83 of the GDPR.",

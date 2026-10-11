@@ -9,6 +9,17 @@ const CITATION = /\[?\bD\d{2}\b\]?/g;
 /** Any bracketed id-like marker, including malformed ones such as [DR13]. It is never part of a claim. */
 const MARKER = /\[[A-Za-z]{1,3}\d{1,3}\]/g;
 
+/** Removes citation markers and tidies the punctuation they leave behind ("higher. [D26]," -> "higher."). */
+export function tidy(text: string): string {
+  return text
+    .replace(MARKER, "")
+    .replace(CITATION, "")
+    .replace(/\s+([.,;!?])/g, "$1")
+    .replace(/([.!?]),/g, "$1")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
 export function splitSentences(text: string): string[] {
   return text
     .replace(/\s+/g, " ")
@@ -94,7 +105,7 @@ export function toCaseOutput(args: {
     if (tokens.length < minClaimTokens) continue;
 
     const citations = [...new Set((sentence.match(/\bD\d{2}\b/g) ?? []) as string[])].filter((id) => docs.some((doc) => doc.id === id));
-    const text = sentence.replace(MARKER, "").replace(CITATION, "").replace(/\s+([.,;])/g, "$1").replace(/\s{2,}/g, " ").trim();
+    const text = tidy(sentence);
     const figures = numbersIn(withoutArticleRefs(text));
 
     let best: { id: string; score: number; numbersOk: boolean } | undefined;
@@ -117,5 +128,5 @@ export function toCaseOutput(args: {
     claims.push({ text, citations, goldClaimId: null });
   }
 
-  return { ...base, abstained: false, answer: trimmed.replace(MARKER, "").replace(CITATION, "").replace(/\s+([.,;])/g, "$1").replace(/\s{2,}/g, " ").trim(), claims };
+  return { ...base, abstained: false, answer: tidy(trimmed), claims };
 }

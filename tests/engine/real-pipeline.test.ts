@@ -181,3 +181,10 @@ test("aligner: a sentence that drags in a figure from another provision is flagg
   const output = toCaseOutput({ testCase, docs: dataset.docs, retrieved: [{ id: "D26", score: 3 }, { id: "D17", score: 2 }], contextIds: ["D26", "D17"], answer, latencyMs: 10 });
   assert.equal(output.claims.length, 1, "the sentence must not silently disappear");
 });
+
+test("tidy: removing citations leaves clean punctuation", async () => {
+  const { tidy } = await import("../../lib/real/align");
+  assert.equal(tidy("Fines can reach €10 million, whichever is higher. [D26],"), "Fines can reach €10 million, whichever is higher.");
+  assert.equal(tidy("Notify within 72 hours [D17]."), "Notify within 72 hours.");
+  assert.equal(tidy("A  B [DR13] C"), "A B C");
+});
